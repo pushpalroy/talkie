@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Talkie</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="general">General</string>
+    <string name="notification">Notification</string>
+    <string name="settings">Settings</string>
+    <string name="most_popular">Most Popular</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="favourite">Favourite</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+    <string name="dummy_name">Paul McCartney</string>
+    <string name="dummy_email">paul.cartney@gmail.com</string>
 </resources>
