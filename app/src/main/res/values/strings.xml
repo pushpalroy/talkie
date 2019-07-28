@@ -11,4 +11,7 @@
     <string name="navigation_drawer_close">Close</string>
     <string name="dummy_name">Paul McCartney</string>
     <string name="dummy_email">paul.cartney@gmail.com</string>
+    <string name="item_description">Movie Poster</string>
+    <string name="vote_count_icon">vote count icon</string>
+    <string name="action_delete">Delete</string>
 </resources>

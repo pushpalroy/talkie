@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.navigation.NavigationView;
 import com.pushpal.talkie.R;
 import com.pushpal.talkie.databinding.ActivityMainBinding;
+import com.pushpal.talkie.view.topRated.TopRatedFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setUpNavigationDrawer();
 
         mFragmentManager = getSupportFragmentManager();
+        mFragmentManager.beginTransaction().replace(R.id.content_frame,
+                TopRatedFragment.newInstance()).commit();
     }
 
     private void setUpNavigationDrawer() {
@@ -71,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_item_top_rated:
                 setTitle(menuItem.getTitle());
+                fragment = TopRatedFragment.newInstance();
                 break;
             case R.id.nav_item_favourite:
                 setTitle(menuItem.getTitle());
