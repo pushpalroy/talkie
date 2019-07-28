@@ -1,4 +1,4 @@
-package com.pushpal.talkie.view.topRated;
+package com.pushpal.talkie.view.main;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -17,11 +17,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.pushpal.talkie.R;
-import com.pushpal.talkie.databinding.FragmentTopRatedBinding;
+import com.pushpal.talkie.databinding.FragmentMovieListBinding;
 import com.pushpal.talkie.model.model.Movie;
 import com.pushpal.talkie.model.util.GridAutoFitLayoutManager;
 import com.pushpal.talkie.view.adapter.MoviePagedListAdapter;
-import com.pushpal.talkie.viewmodel.MainActivityViewModel;
+import com.pushpal.talkie.viewmodel.MainViewModel;
 import com.pushpal.talkie.viewmodel.MainViewModelFactory;
 import com.pushpal.talkie.viewmodel.ProviderUtil;
 
@@ -33,7 +33,7 @@ public class TopRatedFragment extends Fragment implements MoviePagedListAdapter.
     /**
      * ViewModel for MainActivity
      */
-    private MainActivityViewModel mViewModel;
+    private MainViewModel mViewModel;
     /**
      * MoviePagedListAdapter enables for data to be loaded in chunks
      */
@@ -44,7 +44,7 @@ public class TopRatedFragment extends Fragment implements MoviePagedListAdapter.
      */
     private Parcelable mSavedLayoutState;
 
-    private FragmentTopRatedBinding mBinding;
+    private FragmentMovieListBinding mBinding;
 
     public static TopRatedFragment newInstance() {
         Bundle args = new Bundle();
@@ -69,7 +69,7 @@ public class TopRatedFragment extends Fragment implements MoviePagedListAdapter.
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_top_rated, container, false);
+                inflater, R.layout.fragment_movie_list, container, false);
         View view = mBinding.getRoot();
         return view;
     }
@@ -102,7 +102,7 @@ public class TopRatedFragment extends Fragment implements MoviePagedListAdapter.
                     getActivity(), CATEGORY_TOP_RATED);
 
             mViewModel = ViewModelProviders.of(this, viewModelFactory)
-                    .get(MainActivityViewModel.class);
+                    .get(MainViewModel.class);
         }
     }
 

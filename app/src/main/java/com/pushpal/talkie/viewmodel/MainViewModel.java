@@ -17,14 +17,14 @@ import static android.nfc.tech.MifareUltralight.PAGE_SIZE;
 import static com.pushpal.talkie.model.util.Constants.INITIAL_LOAD_SIZE_HINT;
 import static com.pushpal.talkie.model.util.Constants.PREFETCH_DISTANCE;
 
-public class MainActivityViewModel extends ViewModel {
+public class MainViewModel extends ViewModel {
 
     private final MovieRepository mRepository;
 
     private LiveData<PagedList<Movie>> mMoviePagedList;
     private LiveData<List<Movie>> mFavoriteMovies;
 
-    MainActivityViewModel(MovieRepository repository, String sortCriteria) {
+    MainViewModel(MovieRepository repository, String sortCriteria) {
         mRepository = repository;
         init(sortCriteria);
     }

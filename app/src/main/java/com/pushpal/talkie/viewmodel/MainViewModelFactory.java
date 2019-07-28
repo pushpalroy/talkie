@@ -20,6 +20,6 @@ public class MainViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         //noinspection unchecked
-        return (T) new MainActivityViewModel(mRepository, mSortCriteria);
+        return (T) new MainViewModel(mRepository, mSortCriteria);
     }
 }

@@ -32,11 +32,11 @@ public class Constants {
     public static final int GRID_SPAN_COUNT = 2;
 
     /**
-     * The number of fixed thread pools used in the MainActivityViewModel
+     * The number of fixed thread pools used in the MainViewModel
      */
     public static final int NUMBER_OF_FIXED_THREADS = 5;
 
-    // Constants used in MainActivityViewModel
+    // Constants used in MainViewModel
     /**
      * Size hint for initial load of PagedList
      */

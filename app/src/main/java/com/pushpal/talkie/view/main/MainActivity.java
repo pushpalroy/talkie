@@ -18,8 +18,6 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.navigation.NavigationView;
 import com.pushpal.talkie.R;
 import com.pushpal.talkie.databinding.ActivityMainBinding;
-import com.pushpal.talkie.view.topRated.MostPopularFragment;
-import com.pushpal.talkie.view.topRated.TopRatedFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -81,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_item_favourite:
                 setTitle(menuItem.getTitle());
+                fragment = FavouriteFragment.newInstance();
                 break;
             default:
                 setTitle(menuItem.getTitle());
