@@ -5,17 +5,16 @@ import androidx.lifecycle.ViewModel;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
+import com.pushpal.talkie.model.data.AppExecutors;
 import com.pushpal.talkie.model.data.MovieDataSourceFactory;
 import com.pushpal.talkie.model.data.MovieRepository;
 import com.pushpal.talkie.model.model.Movie;
 
 import java.util.List;
 import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 import static android.nfc.tech.MifareUltralight.PAGE_SIZE;
 import static com.pushpal.talkie.model.util.Constants.INITIAL_LOAD_SIZE_HINT;
-import static com.pushpal.talkie.model.util.Constants.NUMBER_OF_FIXED_THREADS_FIVE;
 import static com.pushpal.talkie.model.util.Constants.PREFETCH_DISTANCE;
 
 public class MainActivityViewModel extends ViewModel {
@@ -24,11 +23,9 @@ public class MainActivityViewModel extends ViewModel {
 
     private LiveData<PagedList<Movie>> mMoviePagedList;
     private LiveData<List<Movie>> mFavoriteMovies;
-    private String mSortCriteria;
 
-    public MainActivityViewModel(MovieRepository repository, String sortCriteria) {
+    MainActivityViewModel(MovieRepository repository, String sortCriteria) {
         mRepository = repository;
-        mSortCriteria = sortCriteria;
         init(sortCriteria);
     }
 
@@ -36,13 +33,14 @@ public class MainActivityViewModel extends ViewModel {
      * Initialize the paged list
      */
     private void init(String sortCriteria) {
-        Executor executor = Executors.newFixedThreadPool(NUMBER_OF_FIXED_THREADS_FIVE);
+        // Pool of 5 threads
+        Executor executor = AppExecutors.getInstance().networkIO();
 
         // Create a MovieDataSourceFactory providing DataSource generations
         MovieDataSourceFactory movieDataFactory = new MovieDataSourceFactory(sortCriteria);
 
         // Configures how a PagedList loads content from the MovieDataSource
-        PagedList.Config config = (new PagedList.Config.Builder())
+        PagedList.Config pagedListConfig = (new PagedList.Config.Builder())
                 .setEnablePlaceholders(false)
                 // Size hint for initial load of PagedList
                 .setInitialLoadSizeHint(INITIAL_LOAD_SIZE_HINT)
@@ -53,7 +51,7 @@ public class MainActivityViewModel extends ViewModel {
                 .build();
 
         // The LivePagedListBuilder class is used to get a LiveData object of type PagedList
-        mMoviePagedList = new LivePagedListBuilder<>(movieDataFactory, config)
+        mMoviePagedList = new LivePagedListBuilder<>(movieDataFactory, pagedListConfig)
                 .setFetchExecutor(executor)
                 .build();
     }

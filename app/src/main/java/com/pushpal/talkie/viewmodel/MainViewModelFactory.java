@@ -11,7 +11,7 @@ public class MainViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     private final MovieRepository mRepository;
     private final String mSortCriteria;
 
-    public MainViewModelFactory(MovieRepository repository, String sortCriteria) {
+    MainViewModelFactory(MovieRepository repository, String sortCriteria) {
         this.mRepository = repository;
         this.mSortCriteria = sortCriteria;
     }

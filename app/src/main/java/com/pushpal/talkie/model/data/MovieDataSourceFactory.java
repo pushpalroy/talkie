@@ -11,7 +11,6 @@ public class MovieDataSourceFactory extends DataSource.Factory<Integer, Movie> {
     private String mCategory;
 
     public MovieDataSourceFactory(String category) {
-        mPostLiveData = new MutableLiveData<>();
         mCategory = category;
     }
 

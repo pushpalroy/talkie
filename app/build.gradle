@@ -23,6 +23,13 @@ android {
     buildTypes.each {
         it.buildConfigField 'String', 'MOVIE_DB_API_KEY', movieDbApiKey
     }
+    /*
+   * This is just to enable Java 8 in the app
+   */
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -54,10 +61,11 @@ dependencies {
     // Circular ImageView
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
-    // Retrofit, GSON
+    // Retrofit
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 
     // Testing
     testImplementation 'junit:junit:4.12'

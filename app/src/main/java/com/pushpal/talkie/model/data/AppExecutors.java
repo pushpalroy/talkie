@@ -21,6 +21,8 @@ import android.os.Looper;
 
 import androidx.annotation.NonNull;
 
+import com.pushpal.talkie.model.util.Constants;
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -39,11 +41,11 @@ public class AppExecutors {
     // Single thread executor, so that database operations are done in order to avoid race conditions.
     private final Executor diskIO;
 
+    // Pool of 5 threads, to run different network operations simultaneously
+    private final Executor networkIO;
+
     // MainThreadExecutor
     private final Executor mainThread;
-
-    // Pool of 3 threads, to run different network operations simultaneously
-    private final Executor networkIO;
 
     private AppExecutors(Executor diskIO, Executor networkIO, Executor mainThread) {
         this.diskIO = diskIO;
@@ -55,7 +57,7 @@ public class AppExecutors {
         if (sInstance == null) {
             synchronized (LOCK) {
                 sInstance = new AppExecutors(Executors.newSingleThreadExecutor(),
-                        Executors.newFixedThreadPool(3),
+                        Executors.newFixedThreadPool(Constants.NUMBER_OF_FIXED_THREADS),
                         new MainThreadExecutor());
             }
         }

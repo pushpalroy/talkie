@@ -1,6 +1,5 @@
 package com.pushpal.talkie.view.adapter;
 
-import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,10 +44,9 @@ public class MoviePagedListAdapter extends PagedListAdapter<Movie, MoviePagedLis
                     return oldItem.getId().equals(newItem.getId());
                 }
 
-                @SuppressLint("DiffUtilEquals")
                 @Override
-                public boolean areContentsTheSame(Movie oldItem, Movie newItem) {
-                    return oldItem.equals(newItem);
+                public boolean areContentsTheSame(Movie oldItem, @NonNull Movie newItem) {
+                    return oldItem.contentEquals(newItem);
                 }
             };
 
@@ -108,7 +106,7 @@ public class MoviePagedListAdapter extends PagedListAdapter<Movie, MoviePagedLis
          *
          * @param movieItemBinding Used to access the layout's variables and views
          */
-        public MoviePagedViewHolder(MovieItemBinding movieItemBinding) {
+        MoviePagedViewHolder(MovieItemBinding movieItemBinding) {
             super(movieItemBinding.getRoot());
             mMovieItemBinding = movieItemBinding;
             // Call setOnClickListener on the view

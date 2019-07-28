@@ -15,18 +15,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.pushpal.talkie.model.util.Constants.API_STATUS_401;
 import static com.pushpal.talkie.model.util.Constants.NEXT_PAGE_KEY_TWO;
 import static com.pushpal.talkie.model.util.Constants.PREVIOUS_PAGE_KEY_ONE;
-import static com.pushpal.talkie.model.util.Constants.RESPONSE_CODE_API_STATUS;
 
 public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
 
     private static final String TAG = MovieDataSource.class.getSimpleName();
-    private RESTApi restApi;
+    private RESTApi mRestApi;
     private String mCategory;
 
     public MovieDataSource(String category) {
-        restApi = RESTClient.getClient().create(RESTApi.class);
+        mRestApi = RESTClient.getClient().create(RESTApi.class);
         mCategory = category;
     }
 
@@ -36,7 +36,8 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Integer> params,
                             @NonNull final LoadInitialCallback<Integer, Movie> callback) {
-        restApi.getMovies(mCategory, Constants.API_KEY, Constants.PAGE_ONE)
+
+        mRestApi.getMovies(mCategory, Constants.API_KEY, Constants.PAGE_ONE)
                 .enqueue(new Callback<MovieResponse>() {
                     @Override
                     public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {
@@ -46,11 +47,11 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
                                         PREVIOUS_PAGE_KEY_ONE, NEXT_PAGE_KEY_TWO);
                             }
 
-                        } else if (response.code() == RESPONSE_CODE_API_STATUS) {
-                            Log.e(TAG, "Invalid Api key. Response code: " + response.code());
-                        } else {
+                        } else if (response.code() == API_STATUS_401)
+                            Log.e(TAG, "Invalid API key. Response code: " + response.code());
+                        else
                             Log.e(TAG, "Response Code: " + response.code());
-                        }
+
                     }
 
                     @Override
@@ -78,7 +79,7 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
 
         final int currentPage = params.key;
 
-        restApi.getMovies(mCategory, Constants.API_KEY, currentPage)
+        mRestApi.getMovies(mCategory, Constants.API_KEY, currentPage)
                 .enqueue(new Callback<MovieResponse>() {
                     @Override
                     public void onResponse(@NonNull Call<MovieResponse> call, @NonNull Response<MovieResponse> response) {

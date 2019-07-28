@@ -11,18 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.paging.PagedList;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.pushpal.talkie.R;
 import com.pushpal.talkie.databinding.FragmentTopRatedBinding;
 import com.pushpal.talkie.model.model.Movie;
 import com.pushpal.talkie.view.adapter.MoviePagedListAdapter;
-import com.pushpal.talkie.viewmodel.ProviderUtil;
 import com.pushpal.talkie.viewmodel.MainActivityViewModel;
 import com.pushpal.talkie.viewmodel.MainViewModelFactory;
+import com.pushpal.talkie.viewmodel.ProviderUtil;
 
 import static com.pushpal.talkie.model.util.Constants.CATEGORY_TOP_RATED;
 import static com.pushpal.talkie.model.util.Constants.GRID_SPAN_COUNT;
@@ -33,7 +31,7 @@ public class TopRatedFragment extends Fragment implements MoviePagedListAdapter.
     /**
      * ViewModel for MainActivity
      */
-    private MainActivityViewModel mMainViewModel;
+    private MainActivityViewModel mViewModel;
     /**
      * MoviePagedListAdapter enables for data to be loaded in chunks
      */
@@ -96,11 +94,13 @@ public class TopRatedFragment extends Fragment implements MoviePagedListAdapter.
     }
 
     private void setupViewModel() {
-        MainViewModelFactory mainViewModelFactory = ProviderUtil.provideMainActivityViewModelFactory(
-                getActivity(), CATEGORY_TOP_RATED);
+        if (getActivity() != null) {
+            MainViewModelFactory viewModelFactory = ProviderUtil.provideMainActivityViewModelFactory(
+                    getActivity(), CATEGORY_TOP_RATED);
 
-        mMainViewModel = ViewModelProviders.of(this, mainViewModelFactory)
-                .get(MainActivityViewModel.class);
+            mViewModel = ViewModelProviders.of(this, viewModelFactory)
+                    .get(MainActivityViewModel.class);
+        }
     }
 
     private void updateUI() {
@@ -109,16 +109,13 @@ public class TopRatedFragment extends Fragment implements MoviePagedListAdapter.
     }
 
     private void observeMoviePagedList() {
-        mMainViewModel.getMoviePagedList().observe(this, new Observer<PagedList<Movie>>() {
-            @Override
-            public void onChanged(@Nullable PagedList<Movie> pagedList) {
-                if (pagedList != null) {
-                    mMoviePagedListAdapter.submitList(pagedList);
+        mViewModel.getMoviePagedList().observe(this, pagedList -> {
+            if (pagedList != null) {
+                mMoviePagedListAdapter.submitList(pagedList);
 
-                    // Restore the scroll position after setting up the adapter with the list of movies
-                    if (mBinding.movieRv.getLayoutManager() != null)
-                        mBinding.movieRv.getLayoutManager().onRestoreInstanceState(mSavedLayoutState);
-                }
+                // Restore the scroll position after setting up the adapter with the list of movies
+                if (mBinding.movieRv.getLayoutManager() != null)
+                    mBinding.movieRv.getLayoutManager().onRestoreInstanceState(mSavedLayoutState);
             }
         });
     }

@@ -34,7 +34,7 @@ public class Constants {
     /**
      * The number of fixed thread pools used in the MainActivityViewModel
      */
-    public static final int NUMBER_OF_FIXED_THREADS_FIVE = 5;
+    public static final int NUMBER_OF_FIXED_THREADS = 5;
 
     // Constants used in MainActivityViewModel
     /**
@@ -58,7 +58,7 @@ public class Constants {
     /**
      * API Status code for invalid API key or Authentication failed
      */
-    public static final int RESPONSE_CODE_API_STATUS = 401;
+    public static final int API_STATUS_401 = 401;
 
     /**
      * Constants for menu option in FavoriteAdapter

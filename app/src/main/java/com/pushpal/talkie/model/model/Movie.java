@@ -262,6 +262,13 @@ public class Movie implements Parcelable {
         return 0;
     }
 
+    public boolean contentEquals(Object obj) {
+        if (obj == this)
+            return true;
+        Movie movie = (Movie) obj;
+        return movie.getTitle().equals(this.title);
+    }
+
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(posterPath);

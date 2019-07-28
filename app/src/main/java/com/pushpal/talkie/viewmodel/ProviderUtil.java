@@ -10,7 +10,13 @@ import com.pushpal.talkie.model.data.MovieRepository;
 
 public class ProviderUtil {
 
-    public static MovieRepository provideRepository(Context context) {
+    public static MainViewModelFactory provideMainActivityViewModelFactory(Context context,
+                                                                           String sortCriteria) {
+        MovieRepository repository = provideRepository(context.getApplicationContext());
+        return new MainViewModelFactory(repository, sortCriteria);
+    }
+
+    private static MovieRepository provideRepository(Context context) {
         MovieDatabase database = MovieDatabase.getInstance(context.getApplicationContext());
         AppExecutors executors = AppExecutors.getInstance();
         RESTApi theMovieApi = RESTClient.getClient().create(RESTApi.class);
@@ -19,11 +25,5 @@ public class ProviderUtil {
                 database.movieDao(),
                 theMovieApi,
                 executors);
-    }
-
-    public static MainViewModelFactory provideMainActivityViewModelFactory(Context context,
-                                                                           String sortCriteria) {
-        MovieRepository repository = provideRepository(context.getApplicationContext());
-        return new MainViewModelFactory(repository, sortCriteria);
     }
 }
