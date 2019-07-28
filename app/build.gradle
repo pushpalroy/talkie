@@ -58,14 +58,17 @@ dependencies {
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
-    // Circular ImageView
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
-
     // Retrofit
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
+    // Circular ImageView
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    // Shine Button
+    implementation 'com.sackcentury:shinebutton:0.2.0'
 
     // Testing
     testImplementation 'junit:junit:4.12'

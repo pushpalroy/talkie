@@ -14,4 +14,5 @@
     <string name="item_description">Movie Poster</string>
     <string name="vote_count_icon">vote count icon</string>
     <string name="action_delete">Delete</string>
+    <string name="view_as">View As</string>
 </resources>

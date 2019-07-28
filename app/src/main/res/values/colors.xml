@@ -13,4 +13,6 @@
     <color name="colorGreyAlpha">#A6000000</color>
     <color name="white">#FFF</color>
 
+    <color name="colorVeryLightGrey">#cfcfcf</color>
+    <color name="colorLightGreyText">#9E9E9E</color>
 </resources>

@@ -25,10 +25,10 @@ import com.pushpal.talkie.viewmodel.MainActivityViewModel;
 import com.pushpal.talkie.viewmodel.MainViewModelFactory;
 import com.pushpal.talkie.viewmodel.ProviderUtil;
 
-import static com.pushpal.talkie.model.util.Constants.CATEGORY_TOP_RATED;
+import static com.pushpal.talkie.model.util.Constants.CATEGORY_POPULAR;
 import static com.pushpal.talkie.model.util.Constants.LAYOUT_MANAGER_STATE;
 
-public class TopRatedFragment extends Fragment implements MoviePagedListAdapter.MoviePagedListAdapterOnClickHandler {
+public class MostPopularFragment extends Fragment implements MoviePagedListAdapter.MoviePagedListAdapterOnClickHandler {
 
     /**
      * ViewModel for MainActivity
@@ -46,9 +46,9 @@ public class TopRatedFragment extends Fragment implements MoviePagedListAdapter.
 
     private FragmentTopRatedBinding mBinding;
 
-    public static TopRatedFragment newInstance() {
+    public static MostPopularFragment newInstance() {
         Bundle args = new Bundle();
-        TopRatedFragment fragment = new TopRatedFragment();
+        MostPopularFragment fragment = new MostPopularFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -99,7 +99,7 @@ public class TopRatedFragment extends Fragment implements MoviePagedListAdapter.
     private void setupViewModel() {
         if (getActivity() != null) {
             MainViewModelFactory viewModelFactory = ProviderUtil.provideMainActivityViewModelFactory(
-                    getActivity(), CATEGORY_TOP_RATED);
+                    getActivity(), CATEGORY_POPULAR);
 
             mViewModel = ViewModelProviders.of(this, viewModelFactory)
                     .get(MainActivityViewModel.class);

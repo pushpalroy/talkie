@@ -146,7 +146,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
                     .into(mFavItemBinding.ivMoviePoster);
 
             // Set title of the movie to the TextView
-            mFavItemBinding.tvTitle.setText(movie.getTitle());
+            mFavItemBinding.tvMovieTitle.setText(movie.getTitle());
         }
 
         /**

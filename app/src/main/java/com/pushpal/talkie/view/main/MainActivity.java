@@ -1,6 +1,7 @@
 package com.pushpal.talkie.view.main;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.navigation.NavigationView;
 import com.pushpal.talkie.R;
 import com.pushpal.talkie.databinding.ActivityMainBinding;
+import com.pushpal.talkie.view.topRated.MostPopularFragment;
 import com.pushpal.talkie.view.topRated.TopRatedFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (menuItem.getItemId()) {
             case R.id.nav_item_most_popular:
                 setTitle(menuItem.getTitle());
+                fragment = MostPopularFragment.newInstance();
                 break;
             case R.id.nav_item_top_rated:
                 setTitle(menuItem.getTitle());
@@ -88,6 +91,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

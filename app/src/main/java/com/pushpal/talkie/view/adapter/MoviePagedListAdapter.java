@@ -16,7 +16,7 @@ import com.pushpal.talkie.model.model.Movie;
 import com.squareup.picasso.Picasso;
 
 import static com.pushpal.talkie.model.util.Constants.IMAGE_BASE_URL;
-import static com.pushpal.talkie.model.util.Constants.IMAGE_SIZE_185;
+import static com.pushpal.talkie.model.util.Constants.IMAGE_SIZE_342;
 
 public class MoviePagedListAdapter extends PagedListAdapter<Movie, MoviePagedListAdapter.MoviePagedViewHolder> {
 
@@ -68,16 +68,16 @@ public class MoviePagedListAdapter extends PagedListAdapter<Movie, MoviePagedLis
      * @param parent   The ViewGroup that these ViewHolders are contained within.
      * @param viewType If your RecyclerView has more than one type of item (which ours doesn't) you
      *                 can use this viewType integer to provide a different layout.
-     * @return A new MoviePagedViewHolder that holds the MovieListItemBinding
+     * @return A new CompactMoviePagedViewHolder that holds the MovieListItemBinding
      */
     @NonNull
     @Override
     public MoviePagedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        MovieItemBinding mMovieItemBinding = DataBindingUtil.inflate(
-                layoutInflater, R.layout.movie_item, parent, false);
-
-        return new MoviePagedViewHolder(mMovieItemBinding);
+        MovieItemBinding binding = DataBindingUtil.inflate(
+                LayoutInflater.from(parent.getContext()),
+                R.layout.movie_item,
+                parent, false);
+        return new MoviePagedViewHolder(binding);
     }
 
     /**
@@ -92,6 +92,21 @@ public class MoviePagedListAdapter extends PagedListAdapter<Movie, MoviePagedLis
         holder.bind(getItem(position));
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemCount() {
+        return super.getItemCount();
+    }
+
     /**
      * Cache of the children views for a list item.
      */
@@ -99,16 +114,16 @@ public class MoviePagedListAdapter extends PagedListAdapter<Movie, MoviePagedLis
         /**
          * This field is used for data binding
          */
-        private MovieItemBinding mMovieItemBinding;
+        private MovieItemBinding mBinding;
 
         /**
-         * Constructor for the MoviePagedViewHolder
+         * Constructor for the CompactMoviePagedViewHolder
          *
-         * @param movieItemBinding Used to access the layout's variables and views
+         * @param compactBinding Used to access the layout's variables and views
          */
-        MoviePagedViewHolder(MovieItemBinding movieItemBinding) {
-            super(movieItemBinding.getRoot());
-            mMovieItemBinding = movieItemBinding;
+        MoviePagedViewHolder(MovieItemBinding compactBinding) {
+            super(compactBinding.getRoot());
+            mBinding = compactBinding;
             // Call setOnClickListener on the view
             itemView.setOnClickListener(this);
         }
@@ -121,19 +136,30 @@ public class MoviePagedListAdapter extends PagedListAdapter<Movie, MoviePagedLis
          */
         void bind(Movie movie) {
             // Get the complete thumbnail path
-            String thumbnail = IMAGE_BASE_URL + IMAGE_SIZE_185 + movie.getPosterPath();
+            String thumbnail = IMAGE_BASE_URL + IMAGE_SIZE_342 + movie.getPosterPath();
 
             // Load thumbnail with Picasso library
             Picasso.with(itemView.getContext())
                     .load(thumbnail)
+                    .fit().centerCrop()
+                    .placeholder(R.drawable.placeholder)
                     .error(R.drawable.error_image)
-                    .into(mMovieItemBinding.ivMoviePoster);
+                    .into(mBinding.ivMoviePoster);
 
-            // Display the title
-            mMovieItemBinding.tvTitle.setText(movie.getTitle());
+            // Display movie title
+            mBinding.tvMovieTitle.setText(movie.getTitle());
 
-            // Display the vote average
-            mMovieItemBinding.tvVoteCount.setText(String.valueOf(movie.getVoteAverage()));
+            // Display vote average
+            mBinding.tvVoteCount.setText(String.valueOf(movie.getVoteAverage()));
+
+            // Display release year
+            String[] date = movie.getReleaseDate().split("-");
+            mBinding.tvMovieReleaseYear.setText(date[0]);
+
+            // Set like button listener
+            mBinding.btnLike.setOnCheckStateChangeListener((view, checked) -> {
+
+            });
         }
 
         /**
