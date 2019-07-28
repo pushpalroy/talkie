@@ -1,8 +1,11 @@
 package com.pushpal.talkie.view.adapter;
 
+import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -12,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pushpal.talkie.R;
 import com.pushpal.talkie.databinding.MovieItemBinding;
+import com.pushpal.talkie.model.data.AppExecutors;
+import com.pushpal.talkie.model.data.MovieDatabase;
 import com.pushpal.talkie.model.model.Movie;
 import com.squareup.picasso.Picasso;
 
@@ -25,6 +30,9 @@ public class MoviePagedListAdapter extends PagedListAdapter<Movie, MoviePagedLis
      * our RecyclerView
      */
     private final MoviePagedListAdapter.MoviePagedListAdapterOnClickHandler mOnClickHandler;
+
+    // Parent context
+    private Context mContext;
 
     /**
      * The interface that receives onClick messages.
@@ -73,6 +81,8 @@ public class MoviePagedListAdapter extends PagedListAdapter<Movie, MoviePagedLis
     @NonNull
     @Override
     public MoviePagedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        mContext = parent.getContext();
+
         MovieItemBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
                 R.layout.movie_item,
@@ -158,7 +168,19 @@ public class MoviePagedListAdapter extends PagedListAdapter<Movie, MoviePagedLis
 
             // Set like button listener
             mBinding.btnLike.setOnCheckStateChangeListener((view, checked) -> {
-
+                // Using single thread executor
+                AppExecutors.getInstance().diskIO().execute(() -> {
+                    final String updateMessage;
+                    if (checked) {
+                        MovieDatabase.getInstance(mContext).movieDao().insertMovie(movie);
+                        updateMessage = "Added to favourites";
+                    } else {
+                        MovieDatabase.getInstance(mContext).movieDao().deleteMovie(movie);
+                        updateMessage = "Removed from favourites";
+                    }
+                    ((Activity) mContext).runOnUiThread(() ->
+                            Toast.makeText(mContext, updateMessage, Toast.LENGTH_SHORT).show());
+                });
             });
         }
 
