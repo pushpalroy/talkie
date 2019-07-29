@@ -29,6 +29,14 @@
                 android:icon="@drawable/ic_work_manager"
                 android:title="@string/work_manager"
                 app:showAsAction="ifRoom" />
+
+            <item
+                android:id="@+id/nav_item_job"
+                android:enabled="true"
+                android:icon="@drawable/ic_work_black_24dp"
+                android:title="@string/job_scheduler"
+                app:showAsAction="ifRoom" />
+
             <item
                 android:id="@+id/nav_item_notification"
                 android:enabled="true"

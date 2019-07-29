@@ -1,17 +1,13 @@
 package com.pushpal.talkie.model.workmanager;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
 import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.pushpal.talkie.R;
+import com.pushpal.talkie.model.util.NotificationUtil;
 import com.pushpal.talkie.view.main.MainActivity;
 
 public class MovieWorker extends Worker {
@@ -27,31 +23,17 @@ public class MovieWorker extends Worker {
     public Result doWork() {
         Data taskData = getInputData();
         String taskDataString = taskData.getString(MainActivity.MESSAGE_STATUS);
-        showNotification("WorkManager", taskDataString != null ? taskDataString : "Message has been Sent");
+
+        NotificationUtil.showNotification(1,
+                "MovieWorker",
+                taskDataString != null ? taskDataString : "Message has been Sent",
+                "movie_work_channel",
+                "Movie Work Channel",
+                null,
+                getApplicationContext()
+        );
+
         Data outputData = new Data.Builder().putString(WORK_RESULT, "Jobs Finished").build();
-
         return Result.success(outputData);
-    }
-
-    private void showNotification(String task, String description) {
-
-        NotificationManager notificationManager = (NotificationManager) getApplicationContext()
-                .getSystemService(Context.NOTIFICATION_SERVICE);
-
-        String channelId = "task_channel";
-        String channelName = "task_name";
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new
-                    NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT);
-            notificationManager.createNotificationChannel(channel);
-        }
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), channelId)
-                .setContentTitle(task)
-                .setContentText(description)
-                .setSmallIcon(R.mipmap.ic_launcher);
-
-        notificationManager.notify(1, builder.build());
     }
 }

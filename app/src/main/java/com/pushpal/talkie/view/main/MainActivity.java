@@ -1,5 +1,6 @@
 package com.pushpal.talkie.view.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.navigation.NavigationView;
 import com.pushpal.talkie.R;
 import com.pushpal.talkie.databinding.ActivityMainBinding;
+import com.pushpal.talkie.model.job.JobActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -86,6 +88,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 setTitle(menuItem.getTitle());
                 fragment = WorkerFragment.newInstance();
                 break;
+            case R.id.nav_item_job:
+                Intent jobIntent = new Intent(MainActivity.this, JobActivity.class);
+                startActivity(jobIntent);
             default:
                 setTitle(menuItem.getTitle());
         }

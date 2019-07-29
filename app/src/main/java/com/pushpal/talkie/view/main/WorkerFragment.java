@@ -25,8 +25,8 @@ import java.util.concurrent.TimeUnit;
 
 public class WorkerFragment extends Fragment implements FavoriteAdapter.FavoriteAdapterOnClickHandler {
 
-    PeriodicWorkRequest mWorkRequest;
-    WorkManager mWorkManager;
+    private PeriodicWorkRequest mWorkRequest;
+    private WorkManager mWorkManager;
     private FragmentWorkBinding mBinding;
 
     static WorkerFragment newInstance() {
@@ -47,8 +47,9 @@ public class WorkerFragment extends Fragment implements FavoriteAdapter.Favorite
 
         mWorkManager = WorkManager.getInstance();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mWorkRequest = new PeriodicWorkRequest.Builder(MovieWorker.class, 15,
-                    TimeUnit.MINUTES).build();
+            mWorkRequest = new PeriodicWorkRequest.Builder(MovieWorker.class,
+                    15,
+                    TimeUnit.SECONDS).build();
         }
     }
 
