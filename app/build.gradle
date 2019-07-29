@@ -64,6 +64,10 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 
+    // WorkManager
+    implementation "android.arch.work:work-runtime:1.0.1"
+
+
     // Circular ImageView
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 

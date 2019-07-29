@@ -21,6 +21,7 @@ import com.pushpal.talkie.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final String MESSAGE_STATUS = "MainActivity";
     FragmentManager mFragmentManager;
     ActionBarDrawerToggle mToggle;
     ActivityMainBinding mBinding;
@@ -80,6 +81,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_item_favourite:
                 setTitle(menuItem.getTitle());
                 fragment = FavouriteFragment.newInstance();
+                break;
+            case R.id.nav_item_worker:
+                setTitle(menuItem.getTitle());
+                fragment = WorkerFragment.newInstance();
                 break;
             default:
                 setTitle(menuItem.getTitle());

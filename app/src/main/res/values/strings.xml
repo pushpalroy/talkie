@@ -15,4 +15,7 @@
     <string name="vote_count_icon">vote count icon</string>
     <string name="action_delete">Delete</string>
     <string name="view_as">View As</string>
+    <string name="enqueue_work">Enqueue Work</string>
+    <string name="cancel_work">Cancel Work</string>
+    <string name="work_manager">Work Manager</string>
 </resources>
