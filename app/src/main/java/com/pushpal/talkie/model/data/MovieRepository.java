@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.paging.DataSource;
 
 import com.pushpal.talkie.model.api.RESTApi;
 import com.pushpal.talkie.model.model.Movie;
@@ -21,26 +22,14 @@ import static com.pushpal.talkie.model.util.Constants.API_KEY;
 public class MovieRepository {
 
     private static final String TAG = MovieRepository.class.getSimpleName();
-    private static final Object LOCK = new Object();
     private static MovieRepository sInstance;
     private final MovieDao mMovieDao;
     private final RESTApi mRestApi;
     private final AppExecutors mExecutors;
 
-    private MovieRepository(MovieDao movieDao,
-                            RESTApi restApi,
-                            AppExecutors executors) {
-        mMovieDao = movieDao;
-        mRestApi = restApi;
-        mExecutors = executors;
-    }
-
-    public synchronized static MovieRepository getInstance(
-            MovieDao movieDao,
-            RESTApi restApi,
-            AppExecutors executors) {
+    public synchronized static MovieRepository getInstance(MovieDao movieDao, RESTApi restApi, AppExecutors executors) {
         if (sInstance == null) {
-            synchronized (LOCK) {
+            synchronized (MovieRepository.class) {
                 Log.d(TAG, "Making new repository");
                 sInstance = new MovieRepository(movieDao, restApi, executors);
             }
@@ -48,19 +37,48 @@ public class MovieRepository {
         return sInstance;
     }
 
-    /**
-     * Make a network request by calling enqueue and provide a LiveData object of MovieDetails for ViewModel
-     *
-     * @param movieId The ID of the movie
-     */
-    public LiveData<MovieDetails> getMovieDetails(int movieId) {
+    private MovieRepository(MovieDao movieDao, RESTApi restApi, AppExecutors executors) {
+        mMovieDao = movieDao;
+        mRestApi = restApi;
+        mExecutors = executors;
+    }
+
+    public LiveData<List<Movie>> getAllMovies() {
+        return mMovieDao.getAllMovies();
+    }
+
+    public LiveData<List<Movie>> getAllMoviesOrderByTitle() {
+        return mMovieDao.getAll();
+    }
+
+    public LiveData<List<Movie>> getSomeRandomMovies(int numOfMovies) {
+        return mMovieDao.getRandomMovies(numOfMovies);
+    }
+
+    public LiveData<Movie> getMovieById(int movieId) {
+        return mMovieDao.getMovie(movieId);
+    }
+
+    public LiveData<Movie> getRandomMovie() {
+        return mMovieDao.getRandomMovie();
+    }
+
+    public DataSource.Factory<Integer, Movie> getPageMovies() {
+        return null;
+    }
+
+    public void insertMovie(Movie movie) {
+        mExecutors.diskIO().execute(() -> mMovieDao.insertMovie(movie));
+    }
+
+    public void deleteMovie(Movie movie) {
+        mExecutors.diskIO().execute(() -> mMovieDao.deleteMovie(movie));
+    }
+
+    public LiveData<MovieDetails> fetchMovieDetails(int movieId) {
         final MutableLiveData<MovieDetails> movieDetailsData = new MutableLiveData<>();
 
-        // Make a HTTP request to the remote web server. Send Request:
-        // https://api.themoviedb.org/3/movie/{movie_id}?api_key={API_KEY}&language=en-US
-        // &append_to_response=credits
         mRestApi.getMovieDetails(movieId, API_KEY)
-                // Calls are executed with asynchronously with enqueue and notify callback of its response
                 .enqueue(new Callback<MovieDetails>() {
                     @Override
                     public void onResponse(@NonNull Call<MovieDetails> call, @NonNull Response<MovieDetails> response) {
@@ -77,21 +95,5 @@ public class MovieRepository {
                     }
                 });
         return movieDetailsData;
-    }
-
-    /**
-     * Return a LiveData of the list of MovieEntries directly from the database
-     */
-    public LiveData<List<Movie>> getFavoriteMovies() {
-        return mMovieDao.getAllMovies();
-    }
-
-    /**
-     * Returns a LiveData of MovieEntry directly from the database
-     *
-     * @param movieId The movie ID
-     */
-    public LiveData<Movie> getFavoriteMovieByMovieId(int movieId) {
-        return mMovieDao.getMovie(movieId);
     }
 }

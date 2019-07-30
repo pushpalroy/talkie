@@ -15,7 +15,9 @@ import com.pushpal.talkie.R;
 import com.pushpal.talkie.databinding.MovieItemBinding;
 import com.pushpal.talkie.model.data.AppExecutors;
 import com.pushpal.talkie.model.data.MovieDatabase;
+import com.pushpal.talkie.model.data.MovieRepository;
 import com.pushpal.talkie.model.model.Movie;
+import com.pushpal.talkie.viewmodel.ProviderUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -199,15 +201,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
          * Delete a favorite movie when the user clicks "Delete" menu option.
          */
         private void delete(final Movie movie) {
-            // Get the MovieDatabase instance
-            final MovieDatabase db = MovieDatabase.getInstance(mContext);
-            AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                @Override
-                public void run() {
-                    // Delete a favorite movie from the MovieDatabase by using the movieDao
-                    db.movieDao().deleteMovie(movie);
-                }
-            });
+            ProviderUtil.provideRepository(mContext).deleteMovie(movie);
         }
     }
 }

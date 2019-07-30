@@ -1,4 +1,4 @@
-package com.pushpal.talkie.model.service;
+package com.pushpal.talkie.model.jobservice;
 
 import android.app.PendingIntent;
 import android.app.job.JobParameters;
@@ -19,9 +19,15 @@ public class NotificationJobService extends JobService {
     // Runs on main thread
     public boolean onStartJob(JobParameters params) {
         //Set up the notification content intent to launch the app when clicked
-        PendingIntent pendingIntent = PendingIntent.getActivity
-                (this, 0, new Intent(this, MainActivity.class),
-                        PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                this,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationUtil.showNotification(2,
                 "MovieJob",

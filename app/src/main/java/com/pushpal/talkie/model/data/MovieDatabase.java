@@ -16,10 +16,12 @@ import com.pushpal.talkie.model.model.Movie;
 @Database(entities = {Movie.class}, version = 1, exportSchema = false)
 public abstract class MovieDatabase extends RoomDatabase {
 
+    public abstract MovieDao movieDao();
+
     private static final String TAG = MovieDatabase.class.getSimpleName();
     private static final Object LOCK = new Object();
     private static final String DB_NAME = "movieDatabase";
-    private static volatile MovieDatabase sInstance;
+    private static volatile MovieDatabase sInstance = null;
 
     // Returning database instance using Singleton pattern
     public static synchronized MovieDatabase getInstance(Context context) {
@@ -38,8 +40,6 @@ public abstract class MovieDatabase extends RoomDatabase {
                 MovieDatabase.class,
                 DB_NAME).build();
     }
-
-    public abstract MovieDao movieDao();
 
     @NonNull
     @Override

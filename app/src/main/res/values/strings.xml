@@ -40,4 +40,5 @@
     <string name="cancel_jobs">Cancel Jobs</string>
     <string name="no_constraint_toast">Please set at least one constraint</string>
     <string name="job_scheduler">Job Scheduler</string>
+    <string name="random_movie">Random Movie</string>
 </resources>

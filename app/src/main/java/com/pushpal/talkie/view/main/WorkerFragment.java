@@ -18,7 +18,7 @@ import androidx.work.WorkManager;
 import com.pushpal.talkie.R;
 import com.pushpal.talkie.databinding.FragmentWorkBinding;
 import com.pushpal.talkie.model.model.Movie;
-import com.pushpal.talkie.model.workmanager.MovieWorker;
+import com.pushpal.talkie.model.worker.MovieWorker;
 import com.pushpal.talkie.view.adapter.FavoriteAdapter;
 
 import java.util.concurrent.TimeUnit;

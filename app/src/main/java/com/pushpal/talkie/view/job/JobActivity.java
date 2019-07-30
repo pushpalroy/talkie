@@ -1,4 +1,4 @@
-package com.pushpal.talkie.model.job;
+package com.pushpal.talkie.view.job;
 
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
@@ -14,7 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.pushpal.talkie.R;
-import com.pushpal.talkie.model.service.NotificationJobService;
+import com.pushpal.talkie.model.jobservice.NotificationJobService;
 
 public class JobActivity extends AppCompatActivity {
 

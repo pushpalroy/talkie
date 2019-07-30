@@ -1,4 +1,4 @@
-package com.pushpal.talkie.model.workmanager;
+package com.pushpal.talkie.model.worker;
 
 import android.content.Context;
 

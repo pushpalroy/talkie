@@ -25,7 +25,7 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
     private RESTApi mRestApi;
     private String mCategory;
 
-    public MovieDataSource(String category) {
+    MovieDataSource(String category) {
         mRestApi = RESTClient.getClient().create(RESTApi.class);
         mCategory = category;
     }

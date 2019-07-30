@@ -21,10 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".model.job.JobActivity" />
+        <activity android:name=".view.job.JobActivity" />
 
         <service
-            android:name=".model.service.NotificationJobService"
+            android:name=".model.jobservice.NotificationJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 

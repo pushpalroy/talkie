@@ -19,7 +19,7 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.navigation.NavigationView;
 import com.pushpal.talkie.R;
 import com.pushpal.talkie.databinding.ActivityMainBinding;
-import com.pushpal.talkie.model.job.JobActivity;
+import com.pushpal.talkie.view.job.JobActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -73,28 +73,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment fragment = null;
         switch (menuItem.getItemId()) {
             case R.id.nav_item_most_popular:
-                setTitle(menuItem.getTitle());
                 fragment = MostPopularFragment.newInstance();
                 break;
             case R.id.nav_item_top_rated:
-                setTitle(menuItem.getTitle());
                 fragment = TopRatedFragment.newInstance();
                 break;
             case R.id.nav_item_favourite:
-                setTitle(menuItem.getTitle());
                 fragment = FavouriteFragment.newInstance();
                 break;
+            case R.id.nav_item_random:
+                fragment = RandomFragment.newInstance();
+                break;
             case R.id.nav_item_worker:
-                setTitle(menuItem.getTitle());
                 fragment = WorkerFragment.newInstance();
                 break;
             case R.id.nav_item_job:
                 Intent jobIntent = new Intent(MainActivity.this, JobActivity.class);
                 startActivity(jobIntent);
-            default:
-                setTitle(menuItem.getTitle());
         }
         if (fragment != null) {
+            setTitle(menuItem.getTitle());
             mFragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
             mBinding.drawerLayout.closeDrawers();
             return true;

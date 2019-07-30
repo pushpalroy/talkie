@@ -1,6 +1,5 @@
 package com.pushpal.talkie.view.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.pushpal.talkie.R;
 import com.pushpal.talkie.databinding.MovieItemBinding;
 import com.pushpal.talkie.model.data.AppExecutors;
-import com.pushpal.talkie.model.data.MovieDatabase;
 import com.pushpal.talkie.model.model.Movie;
+import com.pushpal.talkie.viewmodel.ProviderUtil;
 import com.squareup.picasso.Picasso;
 
 import static com.pushpal.talkie.model.util.Constants.IMAGE_BASE_URL;
@@ -168,19 +167,16 @@ public class MoviePagedListAdapter extends PagedListAdapter<Movie, MoviePagedLis
 
             // Set like button listener
             mBinding.btnLike.setOnCheckStateChangeListener((view, checked) -> {
-                // Using single thread executor
-                AppExecutors.getInstance().diskIO().execute(() -> {
-                    final String updateMessage;
-                    if (checked) {
-                        MovieDatabase.getInstance(mContext).movieDao().insertMovie(movie);
-                        updateMessage = "Added to favourites";
-                    } else {
-                        MovieDatabase.getInstance(mContext).movieDao().deleteMovie(movie);
-                        updateMessage = "Removed from favourites";
-                    }
-                    ((Activity) mContext).runOnUiThread(() ->
-                            Toast.makeText(mContext, updateMessage, Toast.LENGTH_SHORT).show());
-                });
+                final String updateMessage;
+                if (checked) {
+                    ProviderUtil.provideRepository(mContext).insertMovie(movie);
+                    updateMessage = "Added to favourites";
+                } else {
+                    ProviderUtil.provideRepository(mContext).deleteMovie(movie);
+                    updateMessage = "Removed from favourites";
+                }
+                AppExecutors.getInstance().mainThread().execute(() ->
+                        Toast.makeText(mContext, updateMessage, Toast.LENGTH_SHORT).show());
             });
         }
 

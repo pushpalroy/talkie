@@ -84,6 +84,10 @@ public class MainViewModel extends ViewModel {
      * Set a new value for the list of MovieEntries
      */
     public void setFavoriteMovies() {
-        mFavoriteMovies = mRepository.getFavoriteMovies();
+        mFavoriteMovies = mRepository.getAllMovies();
+    }
+
+    public LiveData<Movie> getRandomMovie(){
+        return mRepository.getRandomMovie();
     }
 }
