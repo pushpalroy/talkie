@@ -1,6 +1,7 @@
 package com.pushpal.talkie.model.data;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -11,6 +12,7 @@ import androidx.room.Update;
 import com.pushpal.talkie.model.model.Movie;
 
 import java.util.List;
+
 
 @Dao
 public interface MovieDao {
@@ -25,7 +27,7 @@ public interface MovieDao {
      * Returns all data in table for paging
      */
     @Query("SELECT * FROM movies ORDER BY title ASC")
-    LiveData<List<Movie>> getAll();
+    DataSource.Factory<Integer, Movie> getAllPaged();
 
     /**
      * Returns LiveData of random movies

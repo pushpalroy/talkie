@@ -81,6 +81,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_item_favourite:
                 fragment = FavouriteFragment.newInstance();
                 break;
+            case R.id.nav_item_fav_paged:
+                fragment = FavPagedFragment.newInstance();
+                break;
             case R.id.nav_item_random:
                 fragment = RandomFragment.newInstance();
                 break;

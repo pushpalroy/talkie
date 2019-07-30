@@ -47,10 +47,6 @@ public class MovieRepository {
         return mMovieDao.getAllMovies();
     }
 
-    public LiveData<List<Movie>> getAllMoviesOrderByTitle() {
-        return mMovieDao.getAll();
-    }
-
     public LiveData<List<Movie>> getSomeRandomMovies(int numOfMovies) {
         return mMovieDao.getRandomMovies(numOfMovies);
     }
@@ -63,8 +59,8 @@ public class MovieRepository {
         return mMovieDao.getRandomMovie();
     }
 
-    public DataSource.Factory<Integer, Movie> getPageMovies() {
-        return null;
+    public DataSource.Factory<Integer, Movie> getAllPagedMovies() {
+        return mMovieDao.getAllPaged();
     }
 
     public void insertMovie(Movie movie) {

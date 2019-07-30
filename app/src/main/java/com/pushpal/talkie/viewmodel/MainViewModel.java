@@ -37,7 +37,7 @@ public class MainViewModel extends ViewModel {
         Executor executor = AppExecutors.getInstance().networkIO();
 
         // Create a MovieDataSourceFactory providing DataSource generations
-        MovieDataSourceFactory movieDataFactory = new MovieDataSourceFactory(sortCriteria);
+        MovieDataSourceFactory movieDataSourceFactory = new MovieDataSourceFactory(sortCriteria);
 
         // Configures how a PagedList loads content from the MovieDataSource
         PagedList.Config pagedListConfig = (new PagedList.Config.Builder())
@@ -51,7 +51,7 @@ public class MainViewModel extends ViewModel {
                 .build();
 
         // The LivePagedListBuilder class is used to get a LiveData object of type PagedList
-        mMoviePagedList = new LivePagedListBuilder<>(movieDataFactory, pagedListConfig)
+        mMoviePagedList = new LivePagedListBuilder<>(movieDataSourceFactory, pagedListConfig)
                 .setFetchExecutor(executor)
                 .build();
     }

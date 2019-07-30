@@ -15,6 +15,11 @@ public class ProviderUtil {
         return new MainViewModelFactory(repository, sortCriteria);
     }
 
+    public static FavViewModelFactory provideFavViewModelFactory(Context context) {
+        MovieRepository repository = provideRepository(context.getApplicationContext());
+        return new FavViewModelFactory(repository);
+    }
+
     public static MovieRepository provideRepository(Context context) {
         MovieDatabase database = MovieDatabase.getInstance(context.getApplicationContext());
         AppExecutors executors = AppExecutors.getInstance();
